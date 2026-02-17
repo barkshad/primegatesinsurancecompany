@@ -11,25 +11,28 @@ import FAQ from './components/FAQ';
 import QuoteForm from './components/QuoteForm';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
+import { ContentProvider } from './contexts/ContentContext';
 
 function App() {
   return (
-    <div className="min-h-screen flex flex-col font-sans">
-      <Header />
-      <main className="flex-grow">
-        <Hero />
-        <Stats />
-        <Partners />
-        <Services />
-        <Features />
-        <Testimonials />
-        <FAQ />
-        <NeedHelp />
-        <QuoteForm />
-      </main>
-      <Footer />
-      <WhatsAppButton />
-    </div>
+    <ContentProvider>
+      <div className="min-h-screen flex flex-col font-sans">
+        <Header />
+        <main className="flex-grow">
+          <Hero />
+          <Stats />
+          <Partners />
+          <Services />
+          <Features />
+          <Testimonials />
+          <FAQ />
+          <NeedHelp />
+          <QuoteForm />
+        </main>
+        <Footer />
+        <WhatsAppButton />
+      </div>
+    </ContentProvider>
   );
 }
 

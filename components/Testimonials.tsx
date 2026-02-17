@@ -1,8 +1,10 @@
 import React from 'react';
-import { TESTIMONIALS } from '../constants';
+import { useContent } from '../contexts/ContentContext';
 import { Quote } from 'lucide-react';
 
 const Testimonials: React.FC = () => {
+  const { content } = useContent();
+
   return (
     <section id="testimonials" className="py-24 bg-blue-900 text-white relative overflow-hidden">
         {/* Background Patterns */}
@@ -18,7 +20,7 @@ const Testimonials: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {TESTIMONIALS.map((testimonial) => (
+          {content.testimonials.map((testimonial) => (
             <div key={testimonial.id} className="bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-2xl hover:bg-white/10 transition-colors">
               <Quote className="w-10 h-10 text-blue-400 mb-6 opacity-50" />
               <p className="text-blue-50 leading-relaxed italic mb-8">"{testimonial.content}"</p>

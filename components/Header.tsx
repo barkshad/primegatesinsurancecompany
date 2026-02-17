@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Shield } from 'lucide-react';
 import { NAV_ITEMS } from '../constants';
+import { useContent } from '../contexts/ContentContext';
 import TopBar from './TopBar';
 
 const Header: React.FC = () => {
+  const { content } = useContent();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -26,7 +28,7 @@ const Header: React.FC = () => {
                <Shield className="w-7 h-7 fill-blue-700 text-blue-900" />
             </div>
             <span className="font-bold text-xl md:text-2xl leading-none tracking-tight">
-              Primegates
+              {content.general.companyName.split(" ")[0]}
               <span className="block text-xs font-medium text-red-600 uppercase tracking-wider mt-0.5">Insurance Agency</span>
             </span>
           </a>

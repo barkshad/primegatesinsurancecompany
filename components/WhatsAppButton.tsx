@@ -1,9 +1,10 @@
 import React from 'react';
 import { MessageCircle } from 'lucide-react';
-import { WHATSAPP_NUMBER } from '../constants';
+import { useContent } from '../contexts/ContentContext';
 
 const WhatsAppButton: React.FC = () => {
-  const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=Hello%20Primegates,%20I%20would%20like%20to%20get%20a%20quote.`;
+  const { content } = useContent();
+  const whatsappLink = `https://wa.me/${content.general.whatsappNumber}?text=Hello%20${content.general.companyName},%20I%20would%20like%20to%20get%20a%20quote.`;
 
   return (
     <a

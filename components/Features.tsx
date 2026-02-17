@@ -1,7 +1,10 @@
 import React from 'react';
-import { FEATURES } from '../constants';
+import { useContent } from '../contexts/ContentContext';
+import DynamicIcon from './DynamicIcon';
 
 const Features: React.FC = () => {
+  const { content } = useContent();
+
   return (
     <section id="why-us" className="py-20 bg-white">
       <div className="container mx-auto px-4 md:px-6">
@@ -14,13 +17,12 @@ const Features: React.FC = () => {
             </p>
             
             <div className="space-y-8">
-              {FEATURES.map((feature) => {
-                const Icon = feature.icon;
+              {content.features.map((feature) => {
                 return (
                   <div key={feature.id} className="flex">
                     <div className="flex-shrink-0 mr-4">
                       <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600">
-                        <Icon className="w-6 h-6" />
+                        <DynamicIcon name={feature.icon} className="w-6 h-6" />
                       </div>
                     </div>
                     <div>

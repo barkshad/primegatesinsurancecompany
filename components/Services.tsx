@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { PERSONAL_SERVICES, BUSINESS_SERVICES } from '../constants';
+import { useContent } from '../contexts/ContentContext';
 import { User, Building2 } from 'lucide-react';
+import DynamicIcon from './DynamicIcon';
 
 const Services: React.FC = () => {
+  const { content } = useContent();
   const [activeTab, setActiveTab] = useState<'personal' | 'business'>('personal');
 
-  const activeServices = activeTab === 'personal' ? PERSONAL_SERVICES : BUSINESS_SERVICES;
+  const activeServices = activeTab === 'personal' ? content.personalServices : content.businessServices;
 
   return (
     <section id="solutions" className="py-24 bg-white">
@@ -48,7 +50,6 @@ const Services: React.FC = () => {
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {activeServices.map((service) => {
-            const Icon = service.icon;
             return (
               <div key={service.id} className="bg-gray-50 rounded-2xl overflow-hidden border border-gray-100 hover:border-blue-200 hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
                 <div className="h-48 overflow-hidden relative">
@@ -60,7 +61,7 @@ const Services: React.FC = () => {
                   />
                   <div className="absolute bottom-4 left-4 z-20">
                      <div className="w-10 h-10 bg-white/90 backdrop-blur rounded-lg flex items-center justify-center text-blue-700">
-                        <Icon className="w-5 h-5" />
+                        <DynamicIcon name={service.icon} className="w-5 h-5" />
                      </div>
                   </div>
                 </div>

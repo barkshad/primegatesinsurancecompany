@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Plus, Minus } from 'lucide-react';
-import { FAQS } from '../constants';
+import { useContent } from '../contexts/ContentContext';
 
 const FAQ: React.FC = () => {
+  const { content } = useContent();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const toggleFAQ = (index: number) => {
@@ -36,7 +37,7 @@ const FAQ: React.FC = () => {
           {/* Accordion Section */}
           <div className="md:w-2/3">
             <div className="space-y-4">
-              {FAQS.map((faq, index) => (
+              {content.faqs.map((faq, index) => (
                 <div 
                   key={index} 
                   className={`bg-white rounded-xl overflow-hidden border transition-all duration-300 ${openIndex === index ? 'border-blue-200 shadow-md' : 'border-gray-200 hover:border-blue-200'}`}

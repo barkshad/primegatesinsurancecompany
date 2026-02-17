@@ -1,8 +1,11 @@
 import React from 'react';
-import { QUICK_LINKS } from '../constants';
+import { useContent } from '../contexts/ContentContext';
 import { ArrowRight } from 'lucide-react';
+import DynamicIcon from './DynamicIcon';
 
 const NeedHelp: React.FC = () => {
+  const { content } = useContent();
+
   return (
     <section className="py-20 bg-gray-50 border-t border-gray-100">
       <div className="container mx-auto px-4 md:px-6">
@@ -11,12 +14,11 @@ const NeedHelp: React.FC = () => {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {QUICK_LINKS.map((link) => {
-            const Icon = link.icon;
+          {content.quickLinks.map((link) => {
             return (
               <a key={link.title} href={link.href} className="group bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-blue-300 transition-all flex items-start">
                 <div className="bg-blue-50 p-3 rounded-lg text-blue-700 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                  <Icon className="w-6 h-6" />
+                  <DynamicIcon name={link.icon} className="w-6 h-6" />
                 </div>
                 <div className="ml-4">
                   <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-700 flex items-center">
