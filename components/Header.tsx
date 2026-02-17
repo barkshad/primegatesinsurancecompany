@@ -18,33 +18,7 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Helper to handle hash links when on different pages
-  const getHref = (href: string) => {
-    if (href.startsWith('/#')) {
-      // If we are already on home, standard hash jump works (but React Router might need help)
-      // Since we use HashRouter in App, the path is actually /#/service/123.
-      // A link to /#hero means /#/hero. 
-      // If we are on /service/123, clicking /#hero goes to root.
-      return href.replace(/^\//, ''); // removes leading slash for HashRouter compatibility if needed, or keeping it depends on router setup.
-      // With HashRouter: <Link to="/#hero"> works if we handle scroll.
-      // Let's just use standard anchor tags for home sections if we are on home.
-    }
-    return href;
-  };
-  
   const isHome = location.pathname === '/';
-
-  const handleNavClick = (href: string) => {
-    setIsOpen(false);
-    if (href.startsWith('/#') && !isHome) {
-      // Let Link handle it
-    } else if (href.startsWith('/#') && isHome) {
-       // We are on home, just scroll
-       const elementId = href.substring(2);
-       const el = document.getElementById(elementId);
-       if(el) el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <>
@@ -58,16 +32,19 @@ const Header: React.FC = () => {
       >
         <div className="container mx-auto px-6 flex justify-between items-center">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
-            <div className="bg-brand-50 p-2 rounded-lg text-brand-700 group-hover:bg-brand-100 transition-colors duration-200">
-               <Shield className="w-6 h-6 fill-brand-900 text-accent-600" />
+          <Link to="/" className="flex items-start space-x-3 group">
+            <div className="bg-brand-50 p-2 rounded-lg text-brand-700 group-hover:bg-brand-100 transition-colors duration-200 mt-1">
+               <Shield className="w-8 h-8 fill-brand-900 text-accent-600" />
             </div>
-            <div className="flex flex-col">
-              <span className="font-bold text-xl text-accent-700 leading-tight tracking-tight uppercase">
+            <div className="flex flex-col justify-center">
+              <span className="font-bold text-2xl text-accent-700 leading-none tracking-tight uppercase">
                 {content.general.companyName.split(" ")[0]}
               </span>
-              <span className="text-[10px] font-bold text-brand-800 uppercase tracking-widest leading-none">
+              <span className="text-[10px] font-bold text-brand-900 uppercase tracking-[0.2em] leading-tight">
                 Insurance Agency
+              </span>
+              <span className="text-[11px] font-semibold text-accent-600 italic leading-tight mt-0.5">
+                {content.general.tagline}
               </span>
             </div>
           </Link>
@@ -75,13 +52,12 @@ const Header: React.FC = () => {
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             {content.navigation.map((item) => {
-               // Logic: if on home, use anchor scroll. If not, use Link to home + hash.
                if (item.href.startsWith('/#')) {
                  if (isHome) {
                    return (
                      <a 
                        key={item.label} 
-                       href={item.href.substring(1)} // Remove leading slash -> #hero
+                       href={item.href.substring(1)} 
                        className="text-sm font-medium text-slate-600 hover:text-brand-700 transition-colors duration-200"
                      >
                        {item.label}
@@ -118,8 +94,6 @@ const Header: React.FC = () => {
               onClick={(e) => {
                  if (!isHome) {
                     e.preventDefault();
-                    // If not on home, we might need to scroll to bottom of detail page or go home
-                    // Current detail page has a quote form at bottom with id="quote", so standard hash works
                  }
               }} 
               className="px-5 py-2.5 bg-accent-600 text-white text-sm font-semibold rounded-lg hover:bg-accent-700 transition-colors duration-200 focus:ring-2 focus:ring-accent-500 focus:ring-offset-2"

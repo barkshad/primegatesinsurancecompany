@@ -22,7 +22,13 @@ const Hero: React.FC = () => {
         <div className="max-w-3xl">
           <div className="inline-flex items-center space-x-2.5 bg-brand-900/50 rounded-full px-4 py-1.5 mb-8 border border-brand-800 backdrop-blur-sm">
             <span className="w-2 h-2 rounded-full bg-accent-500"></span>
-            <span className="text-xs font-semibold tracking-wide uppercase text-brand-100">{hero.subHeadline}</span>
+            <span className="text-xs font-bold tracking-wide uppercase text-accent-400">
+              {general.tagline}
+            </span>
+            <span className="text-brand-700">•</span>
+            <span className="text-xs font-semibold tracking-wide text-brand-100">
+              {hero.subHeadline}
+            </span>
           </div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white tracking-tight">
