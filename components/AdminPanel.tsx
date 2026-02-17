@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { useContent } from '../contexts/ContentContext';
-import { X, Save, RefreshCw, LogOut, Lock, Edit3, Trash2, PlusCircle, Check } from 'lucide-react';
+import { X, Save, RefreshCw, LogOut, Lock, Edit3, Trash2, PlusCircle, Check, Upload, Image as ImageIcon, Loader2 } from 'lucide-react';
 import { WebsiteContent } from '../types';
+
+const CLOUDINARY_CLOUD_NAME = 'ds2mbrzcn';
+const CLOUDINARY_UPLOAD_PRESET = 'real_unsigned';
 
 const AdminPanel: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
   const { content, updateContent, resetContent, isAuthenticated, login, logout } = useContent();
@@ -10,6 +13,7 @@ const AdminPanel: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen
   const [error, setError] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
   const [editState, setEditState] = useState<WebsiteContent>(content);
+  const [uploading, setUploading] = useState(false);
 
   React.useEffect(() => {
     setEditState(content);
@@ -65,8 +69,41 @@ const AdminPanel: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen
     }
   };
 
+  // Cloudinary Upload Logic
+  const handleImageUpload = async (file: File, onSuccess: (url: string) => void) => {
+    if (!file) return;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+    try {
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+
+      const data = await response.json();
+      if (data.secure_url) {
+        onSuccess(data.secure_url);
+      } else {
+        console.error('Upload failed:', data);
+        alert('Image upload failed. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      alert('Error uploading image. Please check your connection.');
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const templates: Partial<Record<keyof WebsiteContent, any>> = {
-    partners: { name: 'New Partner', logo: 'Shield' },
+    partners: { name: 'New Partner', logo: 'https://placehold.co/200x100?text=Logo' },
     personalServices: { id: `service-${Date.now()}`, title: 'New Service', description: 'Description', longDescription: 'Full Description', benefits: ['Benefit 1'], icon: 'Shield', image: 'https://placehold.co/800x600' },
     businessServices: { id: `biz-${Date.now()}`, title: 'New Service', description: 'Description', longDescription: 'Full Description', benefits: ['Benefit 1'], icon: 'Briefcase', image: 'https://placehold.co/800x600' },
     features: { id: `feat-${Date.now()}`, title: 'New Feature', description: 'Description', icon: 'Check' },
@@ -109,25 +146,83 @@ const AdminPanel: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen
     );
   }
 
-  const renderInput = (label: string, value: string, onChange: (val: string) => void, type = "text") => (
-    <div className="mb-4">
-      <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">{label}</label>
-      {type === 'textarea' ? (
-        <textarea
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm min-h-[80px]"
-        />
-      ) : (
-        <input
-          type={type}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm"
-        />
-      )}
-    </div>
-  );
+  const renderInput = (label: string, value: string, onChange: (val: string) => void, type = "text") => {
+    if (type === 'image') {
+      return (
+        <div className="mb-4">
+          <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">{label}</label>
+          <div className="flex items-start gap-4">
+            <div className="w-20 h-20 bg-slate-100 rounded-lg border border-slate-200 overflow-hidden flex-shrink-0 relative group">
+              {value ? (
+                <img src={value} alt="Preview" className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center text-slate-400">
+                  <ImageIcon className="w-6 h-6" />
+                </div>
+              )}
+            </div>
+            <div className="flex-1 space-y-3">
+              <div className="flex items-center gap-2">
+                <label className="flex-1 cursor-pointer">
+                  <div className={`flex items-center justify-center px-4 py-2 rounded-lg border border-dashed border-slate-300 hover:bg-slate-50 hover:border-brand-400 transition-all ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
+                    {uploading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin text-brand-600" />
+                        <span className="text-sm text-slate-600">Uploading...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Upload className="w-4 h-4 mr-2 text-brand-600" />
+                        <span className="text-sm text-slate-600">Upload Photo</span>
+                      </>
+                    )}
+                    <input 
+                      type="file" 
+                      accept="image/*" 
+                      className="hidden" 
+                      disabled={uploading}
+                      onChange={(e) => {
+                        if (e.target.files?.[0]) {
+                          handleImageUpload(e.target.files[0], onChange);
+                        }
+                      }}
+                    />
+                  </div>
+                </label>
+              </div>
+              <input
+                type="text"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                placeholder="Or paste image URL"
+                className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-xs text-slate-600"
+              />
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="mb-4">
+        <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">{label}</label>
+        {type === 'textarea' ? (
+          <textarea
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm min-h-[80px]"
+          />
+        ) : (
+          <input
+            type={type}
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none text-sm"
+          />
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
@@ -144,8 +239,13 @@ const AdminPanel: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen
                 <Check className="w-4 h-4 mr-1.5" /> Saved
               </span>
             )}
-            <button onClick={handleSave} className="flex items-center px-4 py-2 bg-brand-600 hover:bg-brand-500 rounded-lg text-sm font-semibold transition-colors">
-              <Save className="w-4 h-4 mr-2" /> Save
+            <button 
+              onClick={handleSave} 
+              disabled={uploading}
+              className={`flex items-center px-4 py-2 bg-brand-600 rounded-lg text-sm font-semibold transition-colors ${uploading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-brand-500'}`}
+            >
+              {uploading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />} 
+              Save
             </button>
             <button onClick={resetContent} className="p-2 text-slate-400 hover:text-white transition-colors" title="Reset">
               <RefreshCw className="w-4 h-4" />
@@ -215,7 +315,10 @@ const AdminPanel: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen
                          {/* Common Fields */}
                          <div className="col-span-2 md:col-span-1">{renderInput('Title', item.title, (v) => updateArrayItem(activeTab, idx, 'title', v))}</div>
                          <div className="col-span-2 md:col-span-1">{renderInput('Icon', item.icon, (v) => updateArrayItem(activeTab, idx, 'icon', v))}</div>
-                         <div className="col-span-2">{renderInput('Image URL', item.image, (v) => updateArrayItem(activeTab, idx, 'image', v))}</div>
+                         
+                         {/* Changed from Text to Image Input */}
+                         <div className="col-span-2">{renderInput('Image', item.image, (v) => updateArrayItem(activeTab, idx, 'image', v), 'image')}</div>
+                         
                          <div className="col-span-2">{renderInput('Short Description', item.description, (v) => updateArrayItem(activeTab, idx, 'description', v), 'textarea')}</div>
                          
                          {/* Detailed Fields */}
@@ -274,13 +377,20 @@ const AdminPanel: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen
                         <Trash2 className="w-4 h-4" />
                       </button>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {Object.keys(item).map((key) => (
-                           key !== 'id' && (
-                             <div key={key} className={key === 'description' || key === 'content' || key === 'answer' ? 'col-span-2' : ''}>
-                                {renderInput(key, item[key], (v) => updateArrayItem(activeTab, idx, key, v), (key === 'description' || key === 'content' || key === 'answer') ? 'textarea' : 'text')}
+                        {Object.keys(item).map((key) => {
+                           if (key === 'id') return null;
+                           
+                           // Determine type
+                           let type = 'text';
+                           if (key === 'description' || key === 'content' || key === 'answer') type = 'textarea';
+                           if (key === 'image' || key === 'logo') type = 'image';
+
+                           return (
+                             <div key={key} className={type === 'textarea' || type === 'image' ? 'col-span-2' : ''}>
+                                {renderInput(key, item[key], (v) => updateArrayItem(activeTab, idx, key, v), type)}
                              </div>
-                           )
-                        ))}
+                           );
+                        })}
                       </div>
                     </div>
                   ))}
@@ -338,7 +448,9 @@ const AdminPanel: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen
                    {renderInput('Headline', editState.hero.headline, (v) => updateField('hero', 'headline', v))}
                    {renderInput('Sub-Headline', editState.hero.subHeadline, (v) => updateField('hero', 'subHeadline', v))}
                    {renderInput('Description', editState.hero.description, (v) => updateField('hero', 'description', v), 'textarea')}
-                   {renderInput('Background Image URL', editState.hero.backgroundImage, (v) => updateField('hero', 'backgroundImage', v))}
+                   
+                   {/* Changed to Image Input */}
+                   {renderInput('Background Image', editState.hero.backgroundImage, (v) => updateField('hero', 'backgroundImage', v), 'image')}
                 </div>
               )}
 
