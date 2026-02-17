@@ -1,6 +1,5 @@
 import { WebsiteContent } from './types';
 
-// We now export a single initial state object for the Context
 export const INITIAL_CONTENT: WebsiteContent = {
   general: {
     companyName: "Primegates Insurance Agency",
@@ -11,6 +10,13 @@ export const INITIAL_CONTENT: WebsiteContent = {
     location: "Nairobi, Kenya",
     tagline: "We Serve You Better"
   },
+  navigation: [
+    { label: 'Home', href: '#hero' },
+    { label: 'Our Solutions', href: '#solutions' },
+    { label: 'Why Us', href: '#why-us' },
+    { label: 'Testimonials', href: '#testimonials' },
+    { label: 'FAQs', href: '#faq' },
+  ],
   hero: {
     headline: "Live Free. We've Got You Covered.",
     subHeadline: "IRA Regulated • Reg No: 11000506",
@@ -136,6 +142,15 @@ export const INITIAL_CONTENT: WebsiteContent = {
       image: 'https://randomuser.me/api/portraits/women/68.jpg'
     }
   ],
+  quoteSection: {
+    title: "Get Your Free Quote Today",
+    description: "Fill out the form and our Nairobi-based team will contact you within 15 minutes with a personalized plan.",
+    benefits: [
+      "Instant Digital Certificates",
+      "Flexible Payment Plans (IPF)",
+      "IRA Regulated Trust"
+    ]
+  },
   quickLinks: [
     { title: 'File a Claim', description: 'Start your claims process instantly.', icon: 'FileText', href: '#quote' },
     { title: 'Talk to an Agent', description: 'Get professional advice now.', icon: 'PhoneCall', href: '#quote' },
@@ -162,13 +177,9 @@ export const INITIAL_CONTENT: WebsiteContent = {
       question: "Are you regulated?",
       answer: "Yes, Primegates Insurance Agency is a fully licensed insurance intermediary regulated by the IRA."
     }
-  ]
+  ],
+  footer: {
+    aboutText: "Your trusted partner for Medical, Life, Corporate, and Investment insurance solutions in Kenya. We are dedicated to providing peace of mind through reliable coverage.",
+    copyrightText: "All rights reserved."
+  }
 };
-
-export const NAV_ITEMS = [
-  { label: 'Home', href: '#hero' },
-  { label: 'Our Solutions', href: '#solutions' },
-  { label: 'Why Us', href: '#why-us' },
-  { label: 'Testimonials', href: '#testimonials' },
-  { label: 'FAQs', href: '#faq' },
-];

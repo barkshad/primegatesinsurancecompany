@@ -5,20 +5,21 @@ const Partners: React.FC = () => {
   const { content } = useContent();
 
   return (
-    <section id="partners" className="py-16 bg-white border-b border-gray-100">
-      <div className="container mx-auto px-4 md:px-6">
-        <p className="text-center text-sm font-bold text-gray-400 uppercase tracking-widest mb-10">
-          Trusted Partners & Underwriters
-        </p>
+    <section id="partners" className="py-16 bg-slate-50 border-b border-slate-200">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-10">
+          <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+            Trusted Partners & Underwriters
+          </p>
+        </div>
         
-        <div className="flex flex-wrap justify-center gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-8 items-center opacity-70">
           {content.partners.map((partner) => (
             <div 
               key={partner.name} 
-              className="group flex items-center justify-center w-40 h-20 bg-gray-50 rounded-lg border border-gray-100 hover:border-blue-200 hover:shadow-md transition-all duration-300"
+              className="flex items-center justify-center"
             >
-              {/* Simulate a logo with text styling */}
-              <span className="text-lg font-bold text-gray-400 group-hover:text-blue-900 transition-colors text-center px-2 leading-tight">
+              <span className="text-sm font-semibold text-slate-400 hover:text-brand-800 transition-colors duration-300 cursor-default">
                 {partner.name}
               </span>
             </div>

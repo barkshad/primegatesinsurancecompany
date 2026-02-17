@@ -12,7 +12,7 @@ export interface Service {
   id: string;
   title: string;
   description: string;
-  icon: string; // Changed from LucideIcon to string for serialization
+  icon: string;
   image: string;
 }
 
@@ -20,7 +20,7 @@ export interface Feature {
   id: string;
   title: string;
   description: string;
-  icon: string; // Changed from LucideIcon to string
+  icon: string;
 }
 
 export interface FormData {
@@ -33,7 +33,7 @@ export interface FormData {
 export interface Stat {
   label: string;
   value: string;
-  icon: string; // Changed from LucideIcon to string
+  icon: string;
 }
 
 export interface Testimonial {
@@ -47,13 +47,24 @@ export interface Testimonial {
 export interface QuickLink {
   title: string;
   description: string;
-  icon: string; // Changed from LucideIcon to string
+  icon: string;
   href: string;
 }
 
 export interface FAQItem {
   question: string;
   answer: string;
+}
+
+export interface QuoteSection {
+  title: string;
+  description: string;
+  benefits: string[]; // List of checkmark items
+}
+
+export interface FooterSection {
+  aboutText: string;
+  copyrightText: string;
 }
 
 // Global Content State Interface
@@ -67,6 +78,7 @@ export interface WebsiteContent {
     location: string;
     tagline: string;
   };
+  navigation: NavItem[];
   hero: {
     headline: string;
     subHeadline: string;
@@ -79,6 +91,8 @@ export interface WebsiteContent {
   features: Feature[];
   stats: Stat[];
   testimonials: Testimonial[];
+  quoteSection: QuoteSection;
   quickLinks: QuickLink[];
   faqs: FAQItem[];
+  footer: FooterSection;
 }

@@ -11,10 +11,10 @@ const WhatsAppButton: React.FC = () => {
       href={whatsappLink}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-green-500 rounded-full shadow-lg hover:bg-green-600 transition-transform hover:scale-110 focus:outline-none focus:ring-4 focus:ring-green-300 animate-bounce-slow"
+      className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-emerald-500 rounded-full shadow-lg hover:bg-emerald-600 transition-all duration-200 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-emerald-200"
       aria-label="Chat on WhatsApp"
     >
-      <MessageCircle className="w-8 h-8 text-white" />
+      <MessageCircle className="w-7 h-7 text-white fill-current" />
     </a>
   );
 };

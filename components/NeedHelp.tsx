@@ -7,29 +7,29 @@ const NeedHelp: React.FC = () => {
   const { content } = useContent();
 
   return (
-    <section className="py-20 bg-gray-50 border-t border-gray-100">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-10">
-           <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4 md:mb-0">Need Quick Assistance?</h2>
-        </div>
+    <section className="py-24 bg-white border-t border-slate-200">
+      <div className="container mx-auto px-6">
+        <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-10 tracking-tight">Need Quick Assistance?</h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {content.quickLinks.map((link) => {
-            return (
-              <a key={link.title} href={link.href} className="group bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-blue-300 transition-all flex items-start">
-                <div className="bg-blue-50 p-3 rounded-lg text-blue-700 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                  <DynamicIcon name={link.icon} className="w-6 h-6" />
-                </div>
-                <div className="ml-4">
-                  <h3 className="text-lg font-bold text-gray-900 group-hover:text-blue-700 flex items-center">
-                    {link.title}
-                    <ArrowRight className="w-4 h-4 ml-2 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                  </h3>
-                  <p className="text-gray-500 text-sm mt-1">{link.description}</p>
-                </div>
-              </a>
-            );
-          })}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {content.quickLinks.map((link) => (
+            <a 
+              key={link.title} 
+              href={link.href} 
+              className="group bg-slate-50 p-8 rounded-xl border border-slate-200 hover:border-brand-200 hover:shadow-md transition-all duration-200 flex items-start"
+            >
+              <div className="bg-white p-3 rounded-lg border border-slate-200 text-brand-600 group-hover:bg-brand-600 group-hover:border-brand-600 group-hover:text-white transition-colors duration-200 shadow-sm">
+                <DynamicIcon name={link.icon} className="w-6 h-6" />
+              </div>
+              <div className="ml-5">
+                <h3 className="text-lg font-bold text-slate-900 group-hover:text-brand-700 flex items-center transition-colors">
+                  {link.title}
+                  <ArrowRight className="w-4 h-4 ml-2 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
+                </h3>
+                <p className="text-slate-500 text-sm mt-2 leading-relaxed">{link.description}</p>
+              </div>
+            </a>
+          ))}
         </div>
       </div>
     </section>
