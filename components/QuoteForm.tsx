@@ -6,7 +6,7 @@ const QuoteForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     phone: '',
-    insuranceType: 'Motor Insurance',
+    insuranceType: 'Motor Insurance (Private)',
     message: ''
   });
   const [submitted, setSubmitted] = useState(false);
@@ -37,20 +37,20 @@ const QuoteForm: React.FC = () => {
           <div className="w-full md:w-5/12 bg-gradient-to-br from-blue-600 to-blue-800 p-8 md:p-12 text-white flex flex-col justify-center">
             <h3 className="text-3xl font-bold mb-6">Get Your Free Quote Today</h3>
             <p className="text-blue-100 mb-8 leading-relaxed">
-              Fill out the form and one of our expert consultants will get back to you within 24 hours with a personalized insurance plan.
+              Fill out the form and our Nairobi-based team will contact you within 15 minutes with a personalized plan.
             </p>
             <ul className="space-y-4">
               <li className="flex items-center space-x-3">
                 <CheckCircle className="w-5 h-5 text-green-400" />
-                <span>No obligation quotes</span>
+                <span>Instant Digital Certificates</span>
               </li>
               <li className="flex items-center space-x-3">
                 <CheckCircle className="w-5 h-5 text-green-400" />
-                <span>Competitive market rates</span>
+                <span>Flexible Payment Plans (IPF)</span>
               </li>
               <li className="flex items-center space-x-3">
                 <CheckCircle className="w-5 h-5 text-green-400" />
-                <span>Confidential data handling</span>
+                <span>IRA Regulated Trust</span>
               </li>
             </ul>
           </div>
@@ -63,7 +63,7 @@ const QuoteForm: React.FC = () => {
                 </div>
                 <h4 className="text-2xl font-bold text-gray-900">Request Sent!</h4>
                 <p className="text-gray-600">
-                  Thank you, {formData.name}. We have received your details and will contact you shortly on {formData.phone}.
+                  Asante sana, {formData.name}. We have received your details and will call you shortly on {formData.phone}.
                 </p>
                 <button 
                   onClick={() => setSubmitted(false)}
@@ -84,7 +84,7 @@ const QuoteForm: React.FC = () => {
                     value={formData.name}
                     onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-gray-900"
-                    placeholder="John Doe"
+                    placeholder="e.g. John Kamau"
                   />
                 </div>
 
@@ -98,7 +98,7 @@ const QuoteForm: React.FC = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-gray-900"
-                    placeholder="+254 700 000 000"
+                    placeholder="07XX XXX XXX"
                   />
                 </div>
 
@@ -111,10 +111,14 @@ const QuoteForm: React.FC = () => {
                     onChange={handleChange}
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all text-gray-900 bg-white"
                   >
-                    <option value="Motor Insurance">Motor Insurance</option>
-                    <option value="Medical Cover">Medical Cover</option>
-                    <option value="Life Insurance">Life & Education</option>
-                    <option value="Business Insurance">SME & Business</option>
+                    <option value="Motor Private">Motor Insurance (Private)</option>
+                    <option value="Motor Commercial / PSV">Motor Commercial / PSV (Matatu/Uber)</option>
+                    <option value="Medical Cover">Medical Cover (Individual/Family)</option>
+                    <option value="Corporate Medical">Corporate Medical</option>
+                    <option value="Life & Education">Life & Education Policies</option>
+                    <option value="SME / Business">SME / Business (Fire, Theft)</option>
+                    <option value="WIBA">WIBA / Employee Liability</option>
+                    <option value="Money Market / Investment">Investments (MMF)</option>
                     <option value="Other">Other</option>
                   </select>
                 </div>
