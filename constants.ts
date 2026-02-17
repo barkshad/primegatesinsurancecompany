@@ -11,11 +11,11 @@ export const INITIAL_CONTENT: WebsiteContent = {
     tagline: "We Serve You Better"
   },
   navigation: [
-    { label: 'Home', href: '/#hero' },
-    { label: 'Our Solutions', href: '/#solutions' },
-    { label: 'Why Us', href: '/#why-us' },
-    { label: 'Testimonials', href: '/#testimonials' },
-    { label: 'FAQs', href: '/#faq' },
+    { label: 'Home', href: '/' },
+    { label: 'Our Solutions', href: '/solutions' },
+    { label: 'Why Us', href: '/about' },
+    { label: 'Testimonials', href: '/testimonials' },
+    { label: 'FAQs', href: '/faq' },
   ],
   hero: {
     headline: "Live Free. We've Got You Covered.",
@@ -216,9 +216,9 @@ export const INITIAL_CONTENT: WebsiteContent = {
     ]
   },
   quickLinks: [
-    { title: 'File a Claim', description: 'Start your claims process instantly.', icon: 'FileText', href: '#quote' },
-    { title: 'Talk to an Agent', description: 'Get professional advice now.', icon: 'PhoneCall', href: '#quote' },
-    { title: 'Digital Sticker', description: 'Get your insurance certificate.', icon: 'HelpCircle', href: '#quote' },
+    { title: 'File a Claim', description: 'Start your claims process instantly.', icon: 'FileText', href: '/contact' },
+    { title: 'Talk to an Agent', description: 'Get professional advice now.', icon: 'PhoneCall', href: '/contact' },
+    { title: 'Digital Sticker', description: 'Get your insurance certificate.', icon: 'HelpCircle', href: '/contact' },
   ],
   faqs: [
     { 

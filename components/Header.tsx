@@ -18,7 +18,12 @@ const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const isHome = location.pathname === '/';
+  // Check if link is active
+  const isActive = (path: string) => {
+    if (path === '/' && location.pathname === '/') return true;
+    if (path !== '/' && location.pathname.startsWith(path)) return true;
+    return false;
+  };
 
   return (
     <>
@@ -51,55 +56,23 @@ const Header: React.FC = () => {
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
-            {content.navigation.map((item) => {
-               if (item.href.startsWith('/#')) {
-                 if (isHome) {
-                   return (
-                     <a 
-                       key={item.label} 
-                       href={item.href.substring(1)} 
-                       className="text-sm font-medium text-slate-600 hover:text-brand-700 transition-colors duration-200"
-                     >
-                       {item.label}
-                     </a>
-                   );
-                 } else {
-                   return (
-                      <Link
-                        key={item.label}
-                        to="/"
-                        onClick={() => setTimeout(() => {
-                           const el = document.getElementById(item.href.substring(2));
-                           if(el) el.scrollIntoView({ behavior: 'smooth' });
-                        }, 100)}
-                        className="text-sm font-medium text-slate-600 hover:text-brand-700 transition-colors duration-200"
-                      >
-                        {item.label}
-                      </Link>
-                   );
-                 }
-               }
-               return (
-                  <a 
-                    key={item.label} 
-                    href={item.href}
-                    className="text-sm font-medium text-slate-600 hover:text-brand-700 transition-colors duration-200"
-                  >
-                    {item.label}
-                  </a>
-               )
-            })}
-            <a 
-              href="#quote"
-              onClick={(e) => {
-                 if (!isHome) {
-                    e.preventDefault();
-                 }
-              }} 
+            {content.navigation.map((item) => (
+              <Link
+                key={item.label} 
+                to={item.href}
+                className={`text-sm font-medium transition-colors duration-200 ${
+                  isActive(item.href) ? 'text-brand-700 font-bold' : 'text-slate-600 hover:text-brand-700'
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+            <Link 
+              to="/contact" 
               className="px-5 py-2.5 bg-accent-600 text-white text-sm font-semibold rounded-lg hover:bg-accent-700 transition-colors duration-200 focus:ring-2 focus:ring-accent-500 focus:ring-offset-2"
             >
               Get a Quote
-            </a>
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -118,29 +91,23 @@ const Header: React.FC = () => {
             {content.navigation.map((item) => (
                <Link
                 key={item.label}
-                to="/"
-                onClick={() => {
-                   setIsOpen(false);
-                   if (item.href.startsWith('/#')) {
-                      setTimeout(() => {
-                         const el = document.getElementById(item.href.substring(2));
-                         if(el) el.scrollIntoView({ behavior: 'smooth' });
-                      }, 100);
-                   }
-                }}
-                className="text-slate-700 font-medium px-4 py-3 rounded-lg hover:bg-slate-50 hover:text-brand-700 transition-colors"
+                to={item.href}
+                onClick={() => setIsOpen(false)}
+                className={`text-slate-700 font-medium px-4 py-3 rounded-lg hover:bg-slate-50 hover:text-brand-700 transition-colors ${
+                  isActive(item.href) ? 'bg-slate-50 text-brand-700' : ''
+                }`}
               >
                 {item.label}
               </Link>
             ))}
             <div className="h-px bg-slate-100 my-2"></div>
-            <a 
-              href="#quote" 
+            <Link 
+              to="/contact" 
               className="w-full text-center px-5 py-3 bg-accent-600 text-white font-semibold rounded-lg hover:bg-accent-700 transition-colors"
               onClick={() => setIsOpen(false)}
             >
               Get a Quote
-            </a>
+            </Link>
           </div>
         )}
       </header>
