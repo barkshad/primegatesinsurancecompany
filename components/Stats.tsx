@@ -12,11 +12,9 @@ const AnimatedCounter = ({ value }: { value: string }) => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect(); // Animate only once
-        }
+      ([entry]) => {
+        // Update state based on visibility to trigger re-animation
+        setIsVisible(entry.isIntersecting);
       },
       { threshold: 0.1 }
     );
@@ -29,26 +27,35 @@ const AnimatedCounter = ({ value }: { value: string }) => {
   }, []);
 
   useEffect(() => {
-    if (!isVisible) return;
+    let animationFrameId: number;
 
-    const duration = 2000; // Animation duration in ms
-    const startTime = performance.now();
+    if (isVisible) {
+      let startTime: number | null = null;
+      const duration = 2000; // 2 seconds animation
 
-    const animate = (currentTime: number) => {
-      const timeElapsed = currentTime - startTime;
-      const progress = Math.min(timeElapsed / duration, 1);
-      
-      // Easing function: easeOutExpo
-      const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
-      
-      setCount(Math.floor(ease * numericValue));
+      const animate = (timestamp: number) => {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        
+        // Easing function: easeOutExpo for smooth finish
+        const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+        
+        setCount(Math.floor(ease * numericValue));
 
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
+        if (progress < 1) {
+          animationFrameId = requestAnimationFrame(animate);
+        }
+      };
+
+      animationFrameId = requestAnimationFrame(animate);
+    } else {
+      // Reset count when out of view so it animates again when scrolled back
+      setCount(0);
+    }
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
     };
-
-    requestAnimationFrame(animate);
   }, [isVisible, numericValue]);
 
   return (
