@@ -24,10 +24,21 @@ export const ContentProvider: React.FC<{ children: ReactNode }> = ({ children })
     
     if (savedContent) {
       try {
-        setContent(JSON.parse(savedContent));
+        const parsedContent = JSON.parse(savedContent);
+        // Version Check: If versions mismatch, or saved content has no version, overwrite with INITIAL_CONTENT
+        if (parsedContent.version === INITIAL_CONTENT.version) {
+          setContent(parsedContent);
+        } else {
+          console.log("Content version mismatch. Updating to latest version: " + INITIAL_CONTENT.version);
+          setContent(INITIAL_CONTENT);
+          localStorage.setItem('primegates_content', JSON.stringify(INITIAL_CONTENT));
+        }
       } catch (e) {
         console.error("Failed to parse saved content", e);
+        setContent(INITIAL_CONTENT);
       }
+    } else {
+      setContent(INITIAL_CONTENT);
     }
     
     if (savedAuth === 'true') {

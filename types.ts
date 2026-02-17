@@ -71,6 +71,7 @@ export interface FooterSection {
 
 // Global Content State Interface
 export interface WebsiteContent {
+  version?: string; // Used to force updates when code changes
   general: {
     companyName: string;
     iraRegNo: string;

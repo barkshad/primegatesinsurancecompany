@@ -1,6 +1,7 @@
 import { WebsiteContent } from './types';
 
 export const INITIAL_CONTENT: WebsiteContent = {
+  version: "2.0",
   general: {
     companyName: "Primegates Insurance Agency",
     iraRegNo: "11000506",
