@@ -27,7 +27,7 @@ const Header: React.FC = () => {
             </div>
             <span className="font-bold text-xl md:text-2xl leading-none tracking-tight">
               Primegates
-              <span className="block text-xs font-medium text-red-600 uppercase tracking-wider mt-0.5">Consultants</span>
+              <span className="block text-xs font-medium text-red-600 uppercase tracking-wider mt-0.5">Insurance Agency</span>
             </span>
           </a>
 

@@ -18,10 +18,10 @@ const TopBar: React.FC = () => {
         </div>
         <div className="flex items-center">
           <span className="mr-2">Need assistance? Call us:</span>
-          <a href={`tel:${PHONE_NUMBER.replace(/\s/g, '')}`} className="flex items-center font-bold text-white hover:text-red-400 transition-colors">
+          <div className="flex items-center font-bold text-white">
             <Phone className="w-3.5 h-3.5 mr-2" />
             {PHONE_NUMBER}
-          </a>
+          </div>
         </div>
       </div>
     </div>

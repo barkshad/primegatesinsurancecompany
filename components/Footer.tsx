@@ -1,6 +1,6 @@
 import React from 'react';
 import { Shield, Phone, Mail, MapPin } from 'lucide-react';
-import { COMPANY_NAME, IRA_REG_NO, PHONE_NUMBER, EMAIL_ADDRESS, LOCATION } from '../constants';
+import { COMPANY_NAME, IRA_REG_NO, PHONE_NUMBER, EMAIL_ADDRESS, LOCATION, TAGLINE } from '../constants';
 
 const Footer: React.FC = () => {
   return (
@@ -10,13 +10,14 @@ const Footer: React.FC = () => {
           
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center space-x-2 text-white mb-4">
+            <div className="flex items-center space-x-2 text-white mb-2">
               <Shield className="w-6 h-6 fill-current text-blue-600" />
               <span className="font-bold text-xl">{COMPANY_NAME}</span>
             </div>
+            <p className="text-white font-semibold italic text-sm mb-4">"{TAGLINE}"</p>
             <p className="text-sm leading-relaxed max-w-sm mb-6">
-              Your trusted partner for comprehensive insurance solutions in Kenya. 
-              We are dedicated to providing peace of mind through reliable coverage and exceptional service.
+              Your trusted partner for Medical, Life, Corporate, and Investment insurance solutions in Kenya. 
+              We are dedicated to providing peace of mind through reliable coverage.
             </p>
             <div className="p-4 bg-gray-800 rounded-lg border border-gray-700 inline-block">
               <p className="text-xs text-gray-300 font-medium">
@@ -47,7 +48,7 @@ const Footer: React.FC = () => {
               </li>
               <li className="flex items-center space-x-3">
                 <Phone className="w-5 h-5 text-blue-600 shrink-0" />
-                <a href={`tel:${PHONE_NUMBER.replace(/\s/g, '')}`} className="hover:text-white transition-colors">{PHONE_NUMBER}</a>
+                <span className="text-white">{PHONE_NUMBER}</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Mail className="w-5 h-5 text-blue-600 shrink-0" />

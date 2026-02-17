@@ -52,3 +52,8 @@ export interface QuickLink {
   icon: LucideIcon;
   href: string;
 }
+
+export interface FAQItem {
+  question: string;
+  answer: string;
+}

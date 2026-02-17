@@ -7,6 +7,7 @@ import Services from './components/Services';
 import Features from './components/Features';
 import Testimonials from './components/Testimonials';
 import NeedHelp from './components/NeedHelp';
+import FAQ from './components/FAQ';
 import QuoteForm from './components/QuoteForm';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
@@ -18,10 +19,11 @@ function App() {
       <main className="flex-grow">
         <Hero />
         <Stats />
+        <Partners />
         <Services />
         <Features />
-        <Partners />
         <Testimonials />
+        <FAQ />
         <NeedHelp />
         <QuoteForm />
       </main>

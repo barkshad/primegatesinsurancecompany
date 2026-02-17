@@ -1,10 +1,8 @@
 import React from 'react';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
-import { WHATSAPP_NUMBER } from '../constants';
+import { WHATSAPP_NUMBER, TAGLINE } from '../constants';
 
 const Hero: React.FC = () => {
-  const whatsappLink = `https://wa.me/${WHATSAPP_NUMBER}?text=I%20am%20interested%20in%20an%20insurance%20quote.`;
-
   return (
     <section id="hero" className="relative pt-12 pb-20 lg:pt-32 lg:pb-32 overflow-hidden bg-blue-900">
       {/* Background Image with Overlay */}
@@ -24,13 +22,19 @@ const Hero: React.FC = () => {
             <span className="text-xs font-semibold tracking-wide uppercase text-blue-100">IRA Regulated • Reg No: 11000506</span>
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
             Live Free. <br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-white">We've Got You Covered.</span>
           </h1>
+
+          <div className="mb-6">
+            <span className="inline-block bg-white text-blue-900 font-bold px-3 py-1 rounded text-sm tracking-widest uppercase transform -skew-x-12">
+              "{TAGLINE}"
+            </span>
+          </div>
           
           <p className="text-lg md:text-xl text-blue-100 mb-8 leading-relaxed max-w-lg">
-            Experience peace of mind with Nairobi's premier insurance consultancy. We simplify insurance so you can focus on what matters most—your life and your business.
+            Experience peace of mind with Primegates. We simplify insurance for Medical, Life, Corporate, and Investments so you can focus on what matters most.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4">
@@ -56,7 +60,7 @@ const Hero: React.FC = () => {
             </div>
             <div className="flex items-center">
               <CheckCircle2 className="w-5 h-5 mr-2 text-green-400" />
-              <span>24/7 Support</span>
+              <span>Investment Advice</span>
             </div>
           </div>
         </div>
