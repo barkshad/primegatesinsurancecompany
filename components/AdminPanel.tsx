@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useContent } from '../contexts/ContentContext';
-import { X, Save, RefreshCw, LogOut, Lock, Edit3, Trash2, PlusCircle, Check, Upload, Image as ImageIcon, Loader2 } from 'lucide-react';
+import { X, Save, RefreshCw, LogOut, Lock, Edit3, Trash2, PlusCircle, Check, Upload, Image as ImageIcon, Loader2, ChevronDown, Menu } from 'lucide-react';
 import { WebsiteContent } from '../types';
 
 const CLOUDINARY_CLOUD_NAME = 'ds2mbrzcn';
@@ -14,6 +14,7 @@ const AdminPanel: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen
   const [successMsg, setSuccessMsg] = useState('');
   const [editState, setEditState] = useState<WebsiteContent>(content);
   const [uploading, setUploading] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   React.useEffect(() => {
     setEditState(content);
@@ -117,7 +118,7 @@ const AdminPanel: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen
   if (!isAuthenticated) {
     return (
       <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/80 backdrop-blur-sm p-4">
-        <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-sm relative">
+        <div className="bg-white rounded-xl shadow-2xl p-6 md:p-8 w-full max-w-sm relative">
           <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
             <X className="w-5 h-5" />
           </button>
@@ -151,8 +152,8 @@ const AdminPanel: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen
       return (
         <div className="mb-4">
           <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">{label}</label>
-          <div className="flex items-start gap-4">
-            <div className="w-20 h-20 bg-slate-100 rounded-lg border border-slate-200 overflow-hidden flex-shrink-0 relative group">
+          <div className="flex flex-col sm:flex-row items-start gap-4">
+            <div className="w-full sm:w-20 h-40 sm:h-20 bg-slate-100 rounded-lg border border-slate-200 overflow-hidden flex-shrink-0 relative group">
               {value ? (
                 <img src={value} alt="Preview" className="w-full h-full object-cover" />
               ) : (
@@ -161,9 +162,9 @@ const AdminPanel: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen
                 </div>
               )}
             </div>
-            <div className="flex-1 space-y-3">
+            <div className="flex-1 w-full space-y-3">
               <div className="flex items-center gap-2">
-                <label className="flex-1 cursor-pointer">
+                <label className="flex-1 cursor-pointer w-full">
                   <div className={`flex items-center justify-center px-4 py-2 rounded-lg border border-dashed border-slate-300 hover:bg-slate-50 hover:border-brand-400 transition-all ${uploading ? 'opacity-50 cursor-not-allowed' : ''}`}>
                     {uploading ? (
                       <>
@@ -225,26 +226,35 @@ const AdminPanel: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen
   };
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-7xl h-[90vh] flex flex-col overflow-hidden ring-1 ring-slate-200">
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-2 md:p-4">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-7xl h-full md:h-[90vh] flex flex-col overflow-hidden ring-1 ring-slate-200">
         
-        <div className="bg-slate-900 text-white px-6 py-4 flex justify-between items-center shrink-0">
+        {/* Admin Header */}
+        <div className="bg-slate-900 text-white px-4 md:px-6 py-3 md:py-4 flex justify-between items-center shrink-0">
           <div className="flex items-center space-x-3">
             <Edit3 className="w-5 h-5 text-brand-400" />
-            <h2 className="text-base font-bold">CMS Panel</h2>
+            <h2 className="text-sm md:text-base font-bold hidden sm:block">CMS Panel</h2>
+            {/* Mobile Tab Trigger */}
+            <button 
+                className="sm:hidden flex items-center text-sm font-semibold text-slate-300 ml-2"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+                {activeTab.replace(/([A-Z])/g, ' $1').trim()}
+                <ChevronDown className="w-4 h-4 ml-1" />
+            </button>
           </div>
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center space-x-2 md:space-x-3">
             {successMsg && (
-              <span className="text-emerald-400 text-sm font-medium flex items-center mr-3 animate-pulse">
-                <Check className="w-4 h-4 mr-1.5" /> Saved
+              <span className="text-emerald-400 text-xs md:text-sm font-medium flex items-center mr-2 animate-pulse">
+                <Check className="w-3 h-3 md:w-4 md:h-4 mr-1" /> <span className="hidden sm:inline">Saved</span>
               </span>
             )}
             <button 
               onClick={handleSave} 
               disabled={uploading}
-              className={`flex items-center px-4 py-2 bg-brand-600 rounded-lg text-sm font-semibold transition-colors ${uploading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-brand-500'}`}
+              className={`flex items-center px-3 md:px-4 py-1.5 md:py-2 bg-brand-600 rounded-lg text-xs md:text-sm font-semibold transition-colors ${uploading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-brand-500'}`}
             >
-              {uploading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Save className="w-4 h-4 mr-2" />} 
+              {uploading ? <Loader2 className="w-3 h-3 md:w-4 md:h-4 mr-1.5 animate-spin" /> : <Save className="w-3 h-3 md:w-4 md:h-4 mr-1.5" />} 
               Save
             </button>
             <button onClick={resetContent} className="p-2 text-slate-400 hover:text-white transition-colors" title="Reset">
@@ -260,14 +270,28 @@ const AdminPanel: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen
           </div>
         </div>
 
-        <div className="flex flex-1 overflow-hidden">
-          <div className="w-60 bg-slate-50 border-r border-slate-200 overflow-y-auto shrink-0 py-4">
+        <div className="flex flex-1 overflow-hidden relative">
+          {/* Sidebar - Desktop */}
+          <div className={`
+             absolute inset-0 z-20 bg-slate-50 transition-transform duration-300 sm:relative sm:translate-x-0 sm:w-60 border-r border-slate-200 overflow-y-auto shrink-0 py-4
+             ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
+          `}>
+             {/* Mobile Close Button for Sidebar */}
+             <div className="sm:hidden flex justify-end px-4 mb-2">
+                 <button onClick={() => setIsMobileMenuOpen(false)} className="p-2 text-slate-500">
+                     <X className="w-5 h-5" />
+                 </button>
+             </div>
+
             <div className="space-y-0.5 px-3">
               {Object.keys(editState).map((key) => (
                 <button
                   key={key}
-                  onClick={() => setActiveTab(key as keyof WebsiteContent)}
-                  className={`w-full text-left px-3 py-2 rounded-md text-sm font-medium transition-colors capitalize flex justify-between items-center ${
+                  onClick={() => {
+                      setActiveTab(key as keyof WebsiteContent);
+                      setIsMobileMenuOpen(false);
+                  }}
+                  className={`w-full text-left px-3 py-3 md:py-2 rounded-md text-sm font-medium transition-colors capitalize flex justify-between items-center ${
                     activeTab === key ? 'bg-white text-brand-700 shadow-sm ring-1 ring-slate-200' : 'text-slate-600 hover:bg-slate-100'
                   }`}
                 >
@@ -277,29 +301,30 @@ const AdminPanel: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto bg-white p-8">
+          {/* Main Content Area */}
+          <div className="flex-1 overflow-y-auto bg-white p-4 md:p-8">
             <div className="max-w-4xl mx-auto">
-              <div className="flex justify-between items-center mb-8 pb-4 border-b border-slate-100">
-                <h3 className="text-2xl font-bold text-slate-900 capitalize">{activeTab.replace(/([A-Z])/g, ' $1').trim()}</h3>
+              <div className="flex justify-between items-center mb-6 md:mb-8 pb-4 border-b border-slate-100">
+                <h3 className="text-xl md:text-2xl font-bold text-slate-900 capitalize">{activeTab.replace(/([A-Z])/g, ' $1').trim()}</h3>
                 {templates[activeTab] && (
                   <button 
                     onClick={() => addItem(activeTab, templates[activeTab])}
-                    className="flex items-center px-3 py-1.5 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-md text-sm font-medium transition-colors"
+                    className="flex items-center px-3 py-1.5 bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-md text-xs md:text-sm font-medium transition-colors"
                   >
-                    <PlusCircle className="w-4 h-4 mr-1.5" /> Add New
+                    <PlusCircle className="w-3 h-3 md:w-4 md:h-4 mr-1.5" /> <span className="hidden sm:inline">Add New</span><span className="sm:hidden">Add</span>
                   </button>
                 )}
               </div>
 
               {activeTab === 'general' && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                   {renderInput('Company Name', editState.general.companyName, (v) => updateField('general', 'companyName', v))}
                   {renderInput('Reg No', editState.general.iraRegNo, (v) => updateField('general', 'iraRegNo', v))}
                   {renderInput('Phone', editState.general.phoneNumber, (v) => updateField('general', 'phoneNumber', v))}
                   {renderInput('WhatsApp', editState.general.whatsappNumber, (v) => updateField('general', 'whatsappNumber', v))}
                   {renderInput('Email', editState.general.email, (v) => updateField('general', 'email', v))}
                   {renderInput('Location', editState.general.location, (v) => updateField('general', 'location', v))}
-                  <div className="col-span-2">{renderInput('Tagline', editState.general.tagline, (v) => updateField('general', 'tagline', v))}</div>
+                  <div className="col-span-1 md:col-span-2">{renderInput('Tagline', editState.general.tagline, (v) => updateField('general', 'tagline', v))}</div>
                 </div>
               )}
 
@@ -308,10 +333,10 @@ const AdminPanel: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen
                 <div className="space-y-4">
                   {(editState[activeTab] as any[]).map((item, idx) => (
                     <div key={idx} className="p-4 border border-slate-200 rounded-lg bg-slate-50/50 relative group hover:border-slate-300 transition-colors">
-                      <button onClick={() => removeItem(activeTab, idx)} className="absolute top-3 right-3 text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button onClick={() => removeItem(activeTab, idx)} className="absolute top-2 right-2 md:top-3 md:right-3 text-red-400 md:text-slate-400 hover:text-red-500 md:opacity-0 group-hover:opacity-100 transition-opacity p-1 md:p-0">
                         <Trash2 className="w-4 h-4" />
                       </button>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2 md:mt-0">
                          {/* Common Fields */}
                          <div className="col-span-2 md:col-span-1">{renderInput('Title', item.title, (v) => updateArrayItem(activeTab, idx, 'title', v))}</div>
                          <div className="col-span-2 md:col-span-1">{renderInput('Icon', item.icon, (v) => updateArrayItem(activeTab, idx, 'icon', v))}</div>
@@ -373,10 +398,10 @@ const AdminPanel: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen
                 <div className="space-y-4">
                   {(editState[activeTab] as any[]).map((item, idx) => (
                     <div key={idx} className="p-4 border border-slate-200 rounded-lg bg-slate-50/50 relative group hover:border-slate-300 transition-colors">
-                      <button onClick={() => removeItem(activeTab, idx)} className="absolute top-3 right-3 text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <button onClick={() => removeItem(activeTab, idx)} className="absolute top-2 right-2 md:top-3 md:right-3 text-red-400 md:text-slate-400 hover:text-red-500 md:opacity-0 group-hover:opacity-100 transition-opacity p-1 md:p-0">
                         <Trash2 className="w-4 h-4" />
                       </button>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2 md:mt-0">
                         {Object.keys(item).map((key) => {
                            if (key === 'id') return null;
                            

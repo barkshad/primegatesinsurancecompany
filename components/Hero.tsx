@@ -7,7 +7,7 @@ const Hero: React.FC = () => {
   const { hero, general } = content;
 
   return (
-    <section id="hero" className="relative pt-16 pb-24 lg:pt-32 lg:pb-40 overflow-hidden bg-brand-950">
+    <section id="hero" className="relative pt-12 pb-16 md:pt-24 md:pb-32 lg:pt-32 lg:pb-40 overflow-hidden bg-brand-950">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
@@ -20,26 +20,26 @@ const Hero: React.FC = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-3xl">
-          <div className="inline-flex items-center space-x-2.5 bg-brand-900/50 rounded-full px-4 py-1.5 mb-8 border border-brand-800 backdrop-blur-sm">
-            <span className="w-2 h-2 rounded-full bg-accent-500"></span>
-            <span className="text-xs font-bold tracking-wide uppercase text-accent-400">
+          <div className="inline-flex flex-wrap items-center gap-2 bg-brand-900/50 rounded-full px-4 py-1.5 mb-6 md:mb-8 border border-brand-800 backdrop-blur-sm">
+            <span className="w-2 h-2 rounded-full bg-accent-500 shrink-0"></span>
+            <span className="text-xs font-bold tracking-wide uppercase text-accent-400 whitespace-nowrap">
               {general.tagline}
             </span>
-            <span className="text-brand-700">•</span>
-            <span className="text-xs font-semibold tracking-wide text-brand-100">
+            <span className="hidden sm:inline text-brand-700">•</span>
+            <span className="text-xs font-semibold tracking-wide text-brand-100 whitespace-nowrap">
               {hero.subHeadline}
             </span>
           </div>
           
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white tracking-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white tracking-tight">
             {hero.headline}
           </h1>
           
-          <p className="text-lg md:text-xl text-slate-300 mb-10 leading-relaxed max-w-2xl font-light">
+          <p className="text-base sm:text-lg md:text-xl text-slate-300 mb-8 md:mb-10 leading-relaxed max-w-2xl font-light">
             {hero.description}
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 mb-12">
+          <div className="flex flex-col sm:flex-row gap-4 mb-10 md:mb-12">
             <a 
               href="#quote" 
               className="inline-flex items-center justify-center px-8 py-4 bg-accent-600 text-white font-semibold rounded-lg hover:bg-accent-500 transition-colors duration-200 focus:ring-2 focus:ring-accent-500 focus:ring-offset-2 focus:ring-offset-brand-950"
@@ -55,7 +55,7 @@ const Hero: React.FC = () => {
             </a>
           </div>
 
-          <div className="flex flex-wrap gap-8 pt-8 border-t border-white/10">
+          <div className="flex flex-wrap gap-x-8 gap-y-4 pt-8 border-t border-white/10">
              <div className="flex items-center space-x-2">
                 <CheckCircle2 className="w-5 h-5 text-accent-500" />
                 <span className="text-sm font-medium text-slate-300">Fast Claims Processing</span>

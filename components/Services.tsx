@@ -10,10 +10,10 @@ const Services: React.FC = () => {
   const activeServices = activeTab === 'personal' ? content.personalServices : content.businessServices;
 
   return (
-    <section id="solutions" className="py-24 bg-white">
+    <section id="solutions" className="py-16 md:py-24 bg-white">
       <div className="container mx-auto px-6">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-3xl font-bold text-slate-900 mb-4 tracking-tight">Tailored Insurance Solutions</h2>
+        <div className="max-w-3xl mx-auto text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4 tracking-tight">Tailored Insurance Solutions</h2>
           <p className="text-lg text-slate-600 leading-relaxed">
             Whether you are protecting your family's future or securing your business assets, we have the right plan for you.
           </p>
@@ -21,10 +21,10 @@ const Services: React.FC = () => {
 
         {/* Tabs */}
         <div className="flex justify-center mb-12">
-          <div className="inline-flex bg-slate-100 p-1.5 rounded-lg border border-slate-200">
+          <div className="inline-flex flex-col sm:flex-row bg-slate-100 p-1.5 rounded-lg border border-slate-200 w-full sm:w-auto">
             <button
               onClick={() => setActiveTab('personal')}
-              className={`flex items-center px-5 py-2.5 rounded-md text-sm font-semibold transition-all duration-200 ${
+              className={`flex items-center justify-center px-6 py-3 rounded-md text-sm font-semibold transition-all duration-200 mb-2 sm:mb-0 sm:mr-1 ${
                 activeTab === 'personal' 
                 ? 'bg-white text-brand-900 shadow-sm ring-1 ring-slate-200' 
                 : 'text-slate-500 hover:text-slate-900'
@@ -35,7 +35,7 @@ const Services: React.FC = () => {
             </button>
             <button
               onClick={() => setActiveTab('business')}
-              className={`flex items-center px-5 py-2.5 rounded-md text-sm font-semibold transition-all duration-200 ${
+              className={`flex items-center justify-center px-6 py-3 rounded-md text-sm font-semibold transition-all duration-200 ${
                 activeTab === 'business' 
                 ? 'bg-white text-brand-900 shadow-sm ring-1 ring-slate-200' 
                 : 'text-slate-500 hover:text-slate-900'
@@ -48,7 +48,7 @@ const Services: React.FC = () => {
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {activeServices.map((service) => (
             <Link 
               key={service.id} 
@@ -73,7 +73,7 @@ const Services: React.FC = () => {
                 <h3 className="text-lg font-bold text-slate-900 mb-3 group-hover:text-brand-700 transition-colors">
                   {service.title}
                 </h3>
-                <p className="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">
+                <p className="text-slate-600 text-sm leading-relaxed mb-6 flex-grow line-clamp-3">
                   {service.description}
                 </p>
                 <div className="pt-4 border-t border-slate-100">
