@@ -21,7 +21,7 @@ const Hero: React.FC = () => {
       <div className="container mx-auto px-6 relative z-10">
         <div className="max-w-3xl">
           <div className="inline-flex items-center space-x-2.5 bg-brand-900/50 rounded-full px-4 py-1.5 mb-8 border border-brand-800 backdrop-blur-sm">
-            <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
+            <span className="w-2 h-2 rounded-full bg-accent-500"></span>
             <span className="text-xs font-semibold tracking-wide uppercase text-brand-100">{hero.subHeadline}</span>
           </div>
           
@@ -36,7 +36,7 @@ const Hero: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
             <a 
               href="#quote" 
-              className="inline-flex items-center justify-center px-8 py-4 bg-brand-600 text-white font-semibold rounded-lg hover:bg-brand-500 transition-colors duration-200 focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 focus:ring-offset-brand-950"
+              className="inline-flex items-center justify-center px-8 py-4 bg-accent-600 text-white font-semibold rounded-lg hover:bg-accent-500 transition-colors duration-200 focus:ring-2 focus:ring-accent-500 focus:ring-offset-2 focus:ring-offset-brand-950"
             >
               Get a Free Quote
               <ArrowRight className="ml-2 w-4 h-4" />
@@ -51,15 +51,15 @@ const Hero: React.FC = () => {
 
           <div className="flex flex-wrap gap-8 pt-8 border-t border-white/10">
              <div className="flex items-center space-x-2">
-                <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                <CheckCircle2 className="w-5 h-5 text-accent-500" />
                 <span className="text-sm font-medium text-slate-300">Fast Claims Processing</span>
              </div>
              <div className="flex items-center space-x-2">
-                <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                <CheckCircle2 className="w-5 h-5 text-accent-500" />
                 <span className="text-sm font-medium text-slate-300">Expert Investment Advice</span>
              </div>
              <div className="flex items-center space-x-2">
-                <CheckCircle2 className="w-5 h-5 text-emerald-500" />
+                <CheckCircle2 className="w-5 h-5 text-accent-500" />
                 <span className="text-sm font-medium text-slate-300">Regulated by IRA</span>
              </div>
           </div>

@@ -67,8 +67,8 @@ const AdminPanel: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen
 
   const templates: Partial<Record<keyof WebsiteContent, any>> = {
     partners: { name: 'New Partner', logo: 'Shield' },
-    personalServices: { id: `service-${Date.now()}`, title: 'New Service', description: 'Description', icon: 'Shield', image: 'https://placehold.co/800x600' },
-    businessServices: { id: `biz-${Date.now()}`, title: 'New Service', description: 'Description', icon: 'Briefcase', image: 'https://placehold.co/800x600' },
+    personalServices: { id: `service-${Date.now()}`, title: 'New Service', description: 'Description', longDescription: 'Full Description', benefits: ['Benefit 1'], icon: 'Shield', image: 'https://placehold.co/800x600' },
+    businessServices: { id: `biz-${Date.now()}`, title: 'New Service', description: 'Description', longDescription: 'Full Description', benefits: ['Benefit 1'], icon: 'Briefcase', image: 'https://placehold.co/800x600' },
     features: { id: `feat-${Date.now()}`, title: 'New Feature', description: 'Description', icon: 'Check' },
     stats: { label: 'Label', value: '100+', icon: 'Star' },
     testimonials: { id: `test-${Date.now()}`, name: 'Name', role: 'Role', content: 'Feedback', image: 'https://placehold.co/100' },
@@ -203,7 +203,70 @@ const AdminPanel: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen
                 </div>
               )}
 
-              {['navigation', 'partners', 'personalServices', 'businessServices', 'features', 'stats', 'testimonials', 'faqs', 'quickLinks'].includes(activeTab) && (
+              {/* Special rendering for Services to include long description editing */}
+              {['personalServices', 'businessServices'].includes(activeTab) && (
+                <div className="space-y-4">
+                  {(editState[activeTab] as any[]).map((item, idx) => (
+                    <div key={idx} className="p-4 border border-slate-200 rounded-lg bg-slate-50/50 relative group hover:border-slate-300 transition-colors">
+                      <button onClick={() => removeItem(activeTab, idx)} className="absolute top-3 right-3 text-slate-400 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                         {/* Common Fields */}
+                         <div className="col-span-2 md:col-span-1">{renderInput('Title', item.title, (v) => updateArrayItem(activeTab, idx, 'title', v))}</div>
+                         <div className="col-span-2 md:col-span-1">{renderInput('Icon', item.icon, (v) => updateArrayItem(activeTab, idx, 'icon', v))}</div>
+                         <div className="col-span-2">{renderInput('Image URL', item.image, (v) => updateArrayItem(activeTab, idx, 'image', v))}</div>
+                         <div className="col-span-2">{renderInput('Short Description', item.description, (v) => updateArrayItem(activeTab, idx, 'description', v), 'textarea')}</div>
+                         
+                         {/* Detailed Fields */}
+                         <div className="col-span-2 border-t pt-4 mt-2">
+                           <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-3">Detail Page Content</h4>
+                           {renderInput('Long Description', item.longDescription || '', (v) => updateArrayItem(activeTab, idx, 'longDescription', v), 'textarea')}
+                           
+                           <label className="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Key Benefits</label>
+                           <div className="space-y-2">
+                              {(item.benefits || []).map((b: string, bIdx: number) => (
+                                <div key={bIdx} className="flex gap-2">
+                                  <input 
+                                    value={b} 
+                                    onChange={(e) => {
+                                      const newBenefits = [...(item.benefits || [])];
+                                      newBenefits[bIdx] = e.target.value;
+                                      updateArrayItem(activeTab, idx, 'benefits', newBenefits);
+                                    }}
+                                    className="flex-1 px-3 py-2 border border-slate-300 rounded-md text-sm"
+                                  />
+                                   <button 
+                                      onClick={() => {
+                                        const newBenefits = [...(item.benefits || [])];
+                                        newBenefits.splice(bIdx, 1);
+                                        updateArrayItem(activeTab, idx, 'benefits', newBenefits);
+                                      }}
+                                      className="text-slate-400 hover:text-red-500"
+                                    >
+                                      <X className="w-4 h-4" />
+                                    </button>
+                                </div>
+                              ))}
+                              <button 
+                                onClick={() => {
+                                  const newBenefits = [...(item.benefits || []), 'New Benefit'];
+                                  updateArrayItem(activeTab, idx, 'benefits', newBenefits);
+                                }}
+                                className="text-sm text-brand-600 font-medium hover:underline mt-1"
+                              >
+                                + Add Benefit
+                              </button>
+                           </div>
+                         </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Generic handling for other arrays */}
+              {['navigation', 'partners', 'features', 'stats', 'testimonials', 'faqs', 'quickLinks'].includes(activeTab) && (
                 <div className="space-y-4">
                   {(editState[activeTab] as any[]).map((item, idx) => (
                     <div key={idx} className="p-4 border border-slate-200 rounded-lg bg-slate-50/50 relative group hover:border-slate-300 transition-colors">

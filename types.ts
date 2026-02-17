@@ -12,6 +12,8 @@ export interface Service {
   id: string;
   title: string;
   description: string;
+  longDescription?: string; // New field for detail page
+  benefits?: string[]; // New field for detail page
   icon: string;
   image: string;
 }

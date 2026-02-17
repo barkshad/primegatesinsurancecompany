@@ -18,21 +18,30 @@
             },
             colors: {
               brand: {
-                50: '#eff6ff',
-                100: '#dbeafe',
-                200: '#bfdbfe',
-                300: '#93c5fd',
-                400: '#60a5fa',
-                500: '#3b82f6',
-                600: '#2563eb',
-                700: '#1d4ed8',
-                800: '#1e40af',
-                900: '#1e3a8a',
-                950: '#172554',
+                50: '#f0f5fa',
+                100: '#e1ebf5',
+                200: '#c5d9eb',
+                300: '#9bbce0',
+                400: '#6ea0d5',
+                500: '#4a85c9',
+                600: '#346ab1',
+                700: '#2a558f',
+                800: '#264875',
+                900: '#233d62', // Deep Corporate Blue
+                950: '#172740',
               },
               accent: {
-                600: '#dc2626',
-                700: '#b91c1c',
+                50: '#fff7ed',
+                100: '#ffedd5',
+                200: '#fed7aa',
+                300: '#fdba74',
+                400: '#fb923c',
+                500: '#f97316',
+                600: '#ea580c', // Brand Orange/Red
+                700: '#c2410c',
+                800: '#9a3412',
+                900: '#7c2d12',
+                950: '#431407',
               }
             }
           }
@@ -52,6 +61,7 @@
     "react": "https://esm.sh/react@^19.2.4",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
     "react/": "https://esm.sh/react@^19.2.4/",
+    "react-router-dom": "https://esm.sh/react-router-dom@^6.22.3",
     "lucide-react": "https://esm.sh/lucide-react@^0.574.0",
     "vite": "https://esm.sh/vite@^7.3.1",
     "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.4"
@@ -59,7 +69,7 @@
 }
 </script>
 </head>
-  <body class="bg-slate-50 text-slate-900 antialiased selection:bg-brand-200 selection:text-brand-900">
+  <body class="bg-slate-50 text-slate-900 antialiased selection:bg-accent-200 selection:text-accent-900">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>

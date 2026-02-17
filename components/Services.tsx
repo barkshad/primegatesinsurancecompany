@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useContent } from '../contexts/ContentContext';
 import { User, Building2, ArrowRight } from 'lucide-react';
 import DynamicIcon from './DynamicIcon';
+import { Link } from 'react-router-dom';
 
 const Services: React.FC = () => {
   const { content } = useContent();
@@ -49,7 +50,11 @@ const Services: React.FC = () => {
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {activeServices.map((service) => (
-            <div key={service.id} className="group bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-brand-200 hover:shadow-lg transition-all duration-300 flex flex-col">
+            <Link 
+              key={service.id} 
+              to={`/service/${service.id}`}
+              className="group bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-brand-200 hover:shadow-lg transition-all duration-300 flex flex-col"
+            >
               <div className="relative h-48 bg-slate-100 overflow-hidden">
                 <img 
                   src={service.image} 
@@ -72,13 +77,13 @@ const Services: React.FC = () => {
                   {service.description}
                 </p>
                 <div className="pt-4 border-t border-slate-100">
-                  <a href="#quote" className="inline-flex items-center text-sm font-semibold text-brand-600 hover:text-brand-700 transition-colors">
-                    Request Quote
+                  <span className="inline-flex items-center text-sm font-semibold text-accent-600 hover:text-accent-700 transition-colors">
+                    View Details
                     <ArrowRight className="w-4 h-4 ml-1.5 transition-transform group-hover:translate-x-1" />
-                  </a>
+                  </span>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

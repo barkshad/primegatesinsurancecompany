@@ -38,7 +38,7 @@ const QuoteForm: React.FC = () => {
             <ul className="space-y-5">
               {quoteSection.benefits.map((benefit, idx) => (
                 <li key={idx} className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-5 h-5 text-accent-500 shrink-0 mt-0.5" />
                   <span className="text-sm font-medium">{benefit}</span>
                 </li>
               ))}
@@ -73,7 +73,7 @@ const QuoteForm: React.FC = () => {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-slate-900 bg-slate-50 focus:bg-white placeholder:text-slate-400"
+                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-accent-500 outline-none transition-all text-slate-900 bg-slate-50 focus:bg-white placeholder:text-slate-400"
                     placeholder="e.g. John Kamau"
                   />
                 </div>
@@ -87,7 +87,7 @@ const QuoteForm: React.FC = () => {
                     required
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-slate-900 bg-slate-50 focus:bg-white placeholder:text-slate-400"
+                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-accent-500 outline-none transition-all text-slate-900 bg-slate-50 focus:bg-white placeholder:text-slate-400"
                     placeholder="07XX XXX XXX"
                   />
                 </div>
@@ -99,7 +99,7 @@ const QuoteForm: React.FC = () => {
                     name="insuranceType"
                     value={formData.insuranceType}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-slate-900 bg-slate-50 focus:bg-white"
+                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-accent-500 outline-none transition-all text-slate-900 bg-slate-50 focus:bg-white"
                   >
                     <option value="Motor Private">Motor Insurance (Private)</option>
                     <option value="Motor Commercial / PSV">Motor Commercial / PSV</option>
@@ -121,14 +121,14 @@ const QuoteForm: React.FC = () => {
                     rows={3}
                     value={formData.message}
                     onChange={handleChange}
-                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all text-slate-900 bg-slate-50 focus:bg-white placeholder:text-slate-400 resize-none"
+                    className="w-full px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-accent-500 focus:border-accent-500 outline-none transition-all text-slate-900 bg-slate-50 focus:bg-white placeholder:text-slate-400 resize-none"
                     placeholder="Tell us about your requirements..."
                   ></textarea>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg shadow-sm transition-colors flex items-center justify-center space-x-2 focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
+                  className="w-full py-3.5 bg-accent-600 hover:bg-accent-700 text-white font-bold rounded-lg shadow-sm transition-colors flex items-center justify-center space-x-2 focus:ring-2 focus:ring-accent-500 focus:ring-offset-2"
                 >
                   <span>Request Free Quote</span>
                   <Send className="w-4 h-4" />
